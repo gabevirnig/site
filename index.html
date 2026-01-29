@@ -105,9 +105,19 @@
   </div>
 
   <script>
+    const palette = [
+      "#CEBC9B", // light beige
+      "#DE5B52", // red/orange
+      "#4D829D", // navy
+      "#595555", // dark gray
+      "#D68766"  // warm tan/orange
+    ];
+    let colorIndex = 0;
+
     function randomColor() {
-      const hue = Math.floor(Math.random() * 360);
-      return `hsl(${hue} 70% 45%)`;
+      const color = palette[colorIndex];
+      colorIndex = (colorIndex + 1) % palette.length;
+      return color;
     }
 
     const nameEl = document.getElementById("name");
