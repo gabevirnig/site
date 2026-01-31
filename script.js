@@ -15,14 +15,21 @@ block = {
   CY  : mouse.CY
 };
 
-cardEl.addEventListener('mousemove', function(e) {
-  mouse.X   = (e.pageX - cardEl.offsetLeft) - cardEl.offsetWidth / 2;
-  mouse.Y   = (e.pageY - cardEl.offsetTop) - cardEl.offsetHeight / 2;
+// Track mouse movement anywhere in the window
+document.addEventListener('mousemove', function(e) {
+  // Calculate mouse position relative to card center
+  const cardRect = cardEl.getBoundingClientRect();
+  const cardCenterX = cardRect.left + cardRect.width / 2;
+  const cardCenterY = cardRect.top + cardRect.height / 2;
+  
+  mouse.X = e.clientX - cardCenterX;
+  mouse.Y = e.clientY - cardCenterY;
 });
 
-cardEl.addEventListener('mouseleave', function(e) {
-  mouse.X   = mouse.CX;
-  mouse.Y   = mouse.CY;
+// Reset position when mouse leaves window
+document.addEventListener('mouseleave', function(e) {
+  mouse.X = 0;
+  mouse.Y = 0;
 });
 
 // Use requestAnimationFrame for smoother animations
@@ -30,7 +37,7 @@ function animateCard() {
   block.CY += (mouse.Y - block.CY) / 15; // Faster smoothing for more responsive feel
   block.CX += (mouse.X - block.CX) / 15; // Faster smoothing for more responsive feel
 
-  cardEl.style.transform = 'scale(1.03) translate(' + (block.CX * 0.05) + 'px, ' + (block.CY * 0.05) + 'px) rotateX(' + (block.CY * 0.05) + 'deg) rotateY(' + (block.CX * 0.05) + 'deg)';
+  cardEl.style.transform = 'scale(1.03) translate(' + (block.CX * 0.03) + 'px, ' + (block.CY * 0.03) + 'px) rotateX(' + (block.CY * 0.03) + 'deg) rotateY(' + (block.CX * 0.03) + 'deg)';
   
   requestAnimationFrame(animateCard);
 }
